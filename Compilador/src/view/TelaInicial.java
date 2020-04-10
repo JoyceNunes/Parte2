@@ -5,12 +5,14 @@
  */
 package view;
 
-
 import compilador.lexico.Analizador;
 import compilador.lexico.Simbolo;
 import compilador.lexico.Token;
+import compilador.sintatico.AnalizadorSintatico;
+import java.util.ArrayList;
 import model.SimboloTableModel;
 import model.TokenTableModel;
+
 /**
  *
  * @author Joyce
@@ -20,6 +22,7 @@ public class TelaInicial extends javax.swing.JFrame {
     Analizador analizador;
     SimboloTableModel simboloTableModel = new SimboloTableModel();
     TokenTableModel tokenTableModel = new TokenTableModel();
+
     /**
      * Creates new form TelaInicial
      */
@@ -400,13 +403,33 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemSairActionPerformed
 
     private void jMenuItemCompilarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCompilarActionPerformed
-        simboloTableModel.clear();
-        analizador = new Analizador(jTextArea2.getText());
-        for(Simbolo simbolo : analizador.getSimbolos()) {
-            simboloTableModel.addRow(simbolo);
-        }
-        for(Token token : analizador.getTokens()) {
-            tokenTableModel.addRow(token);
+//        simboloTableModel.clear();
+//        analizador = new Analizador(jTextArea2.getText());
+//        for(Simbolo simbolo : analizador.getSimbolos()) {
+//            simboloTableModel.addRow(simbolo);
+//        }
+//        for(Token token : analizador.getTokens()) {
+//            tokenTableModel.addRow(token);
+//        }
+
+        if (!jTextArea2.getText().isEmpty()) {
+            jTextArea1.setText("");
+            Analizador analisador = new Analizador(jTextArea2.getText() + "\n");
+            ArrayList<Token> tokens = new ArrayList<>(analisador.getTokens());
+            ArrayList<Simbolo> simbolos = analisador.getSimbolos();
+            jTextArea1.setText(analisador.getError());
+            for (Token token : tokens) {
+                tokenTableModel.addRow(token);
+            }
+
+            AnalizadorSintatico sintatico = new AnalizadorSintatico(tokens, simbolos, analisador.getError());
+            jTextArea1.setText(sintatico.getMensagem());
+            for (Simbolo simbolo : simbolos) {
+                simboloTableModel.addRow(simbolo);
+            }
+        } else {
+            jTextArea1.setText("Código vazio, por favor adicione um arquivo .txt através do menu ou digite o código desejado");
+
         }
     }//GEN-LAST:event_jMenuItemCompilarActionPerformed
 

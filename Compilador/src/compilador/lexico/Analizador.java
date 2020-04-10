@@ -76,26 +76,19 @@ public class Analizador {
                         Simbolo id = new Simbolo(lexema.toLowerCase());
 
                         //É uma palavra reservada
-                        if (PalavrasReservadas.contains(lexema.toLowerCase())) {
-                            adicionarNovoToken("Palavra Reservada");
-                        } else {
+                        if (!simbolos.contains(id) && !PalavrasReservadas.contains(id.getLexema().toLowerCase())) {
+                            id.setEndereco(simbolos.size());
+                            simbolos.add(id);
+                        } else if (simbolos.contains(id) && !PalavrasReservadas.contains(id.getLexema().toLowerCase())) {
                             
-                            //Novo simbolo encontrado
-                            if (!simbolos.contains(id)) {
-                                
-                                id.setEndereco(simbolos.size());
-                                simbolos.add(id);
-
-                                //Simbolo já encontrado antes
-                            } else if (simbolos.contains(id)) {
-                                
-                            } else {
-                                adicionarNovoToken("cId");
-                            }
-
                         }
-//                        i--;
-//                        this.coluna--;
+                        if (PalavrasReservadas.contains(lexema.toLowerCase())) {
+                             adicionarNovoToken("Palavra Reservada");
+                        } else {
+                            adicionarNovoToken("cId");
+                        }
+                        i--;
+                        this.coluna--;
                         estado = 0;
                     }
                     break;
@@ -113,8 +106,8 @@ public class Analizador {
                     //O lexema é um numero inteiro
                     } else {
                         adicionarNovoToken("cInt");
-//                        i--;
-//                        this.coluna--;
+                        i--;
+                        this.coluna--;
                         estado = 0;
                     }
                     break;
@@ -126,8 +119,8 @@ public class Analizador {
                         estado = 4;
                     } else {
                         error += "Erro" + "(" + this.linha + "," + i + ")" + " , necessário digito após ponto flutuante \n";
-//                        i--;
-//                        this.coluna--;
+                        i--;
+                        this.coluna--;
 
                         estado = 0;
                     }
@@ -139,8 +132,8 @@ public class Analizador {
                         lexema += caracter;
                     } else {
                         adicionarNovoToken("cReal");
-//                        i--;
-//                        this.coluna--;
+                        i--;
+                        this.coluna--;
                         estado = 0;
                     }
                     break;
@@ -152,8 +145,8 @@ public class Analizador {
                         estado = 0;
                     } else {
                         adicionarNovoToken("cDPto");
-//                        i--;
-//                        this.coluna--;
+                        i--;
+                        this.coluna--;
                         estado = 0;
                     }
                     break;
@@ -173,8 +166,8 @@ public class Analizador {
                         }
                         default: {
                             adicionarNovoToken("cLT");
-//                            i--;
-//                            this.coluna--;
+                            i--;
+                            this.coluna--;
                             break;
                         }
                     }
@@ -187,8 +180,8 @@ public class Analizador {
                         adicionarNovoToken("cGE");
                     } else {
                         adicionarNovoToken("cGT");
-//                        i--;
-//                        this.coluna--;
+                        i--;
+                        this.coluna--;
 
                     }
                     estado = 0;
@@ -206,8 +199,8 @@ public class Analizador {
                         lexema += '"';
                         this.error += ("Atenção" + "(" + this.linha + "," + i + ")" + " , Cadeia de caracteres terminando sem aspas \n");
                         adicionarNovoToken("cStr");
-//                        i--;
-//                        this.coluna--;
+                        i--;
+                        this.coluna--;
                         estado = 0;
                     }
                     break;
