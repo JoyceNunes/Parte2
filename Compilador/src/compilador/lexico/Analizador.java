@@ -34,11 +34,13 @@ public class Analizador {
         return new ArrayList<>(simbolos);
     }
 
-    //Chamar a função analizar para cada
-    //linha do código inserido
+    
     public Analizador(String texto) {
         String[] linhas;
         linhas = separar(texto);
+        
+        //Chamar a função analizar para cada
+        //linha do código inserido
         for (String it : linhas) {
             this.coluna = 0;
             this.analizar(it + " ");
@@ -60,6 +62,8 @@ public class Analizador {
                     analizarNovaPalavra();
                     break;
                 }
+                
+                //Iniciou o lexema com uma letra
                 case 1: {
                     //Não terminou de ler o lexema
                     if ((Character.isLetter(caracter) || Character.isDigit(caracter)) && !Character.isWhitespace(caracter)) {
@@ -67,7 +71,8 @@ public class Analizador {
 
                         //Já terminou de ler o lexema
                     } else {
-
+                        //TODO chamar o analizador sintatico para adicionar os simbolos
+                        //e fazer todo esse bloco de código
                         Simbolo id = new Simbolo(lexema.toLowerCase());
 
                         //É uma palavra reservada
@@ -89,7 +94,7 @@ public class Analizador {
                             }
 
                         }
-                        i--;
+//                        i--;
 //                        this.coluna--;
                         estado = 0;
                     }
