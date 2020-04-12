@@ -38,6 +38,11 @@ public class TelaInicial extends javax.swing.JFrame {
         initComponents();
         jTable1.setModel(simboloTableModel);
         jTable2.setModel(tokenTableModel);
+        jMenuItemFechar.setEnabled(false);
+        jMenuItemSalvar.setEnabled(false);
+        jMenuItemSalvarComo.setEnabled(false);
+        jMenuItemImprimir.setEnabled(false);
+        
     }
 
     /**
