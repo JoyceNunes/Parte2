@@ -51,9 +51,10 @@ public class TelaInicial extends javax.swing.JFrame {
         jMenuItemFechar.setEnabled(false);
         jMenuItemSalvar.setEnabled(false);
         jMenuItemSalvarComo.setEnabled(false);
-        jMenuItemImprimir.setEnabled(false);
-
+        jMenuItemImprimir.setEnabled(false);        
         jTextAreaFonte = TextEditor();
+        jTextAreaFonte.setEnabled(false);
+        jTextAreaMensagens.setText("Para iniciar clique em Novo ou Abrir");
     }
 
     public JTextArea TextEditor() {
@@ -437,7 +438,8 @@ public class TelaInicial extends javax.swing.JFrame {
     private void jMenuItemNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemNovoActionPerformed
         // TODO add your handling code here:
 
-        //PERGUNTAR SE DESEJA SALVAR ATUAL        
+        //PERGUNTAR SE DESEJA SALVAR ATUAL 
+        jTextAreaMensagens.setText("");
         jTextAreaFonte.setText("");
         jTextAreaFonte.setEnabled(true);
         jMenuItemFechar.setEnabled(true);
@@ -551,7 +553,6 @@ public class TelaInicial extends javax.swing.JFrame {
         TelaSobre telaSobre = new TelaSobre();
         telaSobre.setTitle("Sobre");
         telaSobre.setVisible(true);
-
 
     }//GEN-LAST:event_jMenuItemSobreActionPerformed
 
