@@ -16,7 +16,7 @@ public class Analizador {
     private final ArrayList<Token> tokens = new ArrayList<>();
     private final ArrayList<Simbolo> simbolos = new ArrayList<>();
     private String error = "";
-    private int coluna = 1;
+    private int coluna = 0;
     private int linha = 1;
     private String lexema = "";
     private int estado = 0;
@@ -74,18 +74,20 @@ public class Analizador {
                         //TODO chamar o analizador sintatico para adicionar os simbolos
                         //e fazer todo esse bloco de código
                         Simbolo id = new Simbolo(lexema.toLowerCase());
-
+                        int endereco = 0;
                         //É uma palavra reservada
                         if (!simbolos.contains(id) && !PalavrasReservadas.contains(id.getLexema().toLowerCase())) {
-                            id.setEndereco(simbolos.size());
+                            endereco = simbolos.size();
+                            id.setEndereco(endereco);
                             simbolos.add(id);
                         } else if (simbolos.contains(id) && !PalavrasReservadas.contains(id.getLexema().toLowerCase())) {
-                            
+                            endereco = simbolos.indexOf(id);
                         }
                         if (PalavrasReservadas.contains(lexema.toLowerCase())) {
                              adicionarNovoToken("Palavra Reservada");
                         } else {
-                            adicionarNovoToken("cId");
+                            Token token = new Token("cID", this.lexema, this.linha, this.coluna, endereco);
+                            tokens.add(token);
                         }
                         i--;
                         this.coluna--;
@@ -214,8 +216,8 @@ public class Analizador {
     }
 
     private void adicionarNovoToken(String tipo) {
-        int colunaDoPrimeiroCaracterDoLexema = this.coluna - this.lexema.length();
-        Token token = new Token(tipo, this.lexema, this.linha, colunaDoPrimeiroCaracterDoLexema, tokens.size());
+        int colunaDoPrimeiroCaracterDoLexema = coluna - lexema.length();
+        Token token = new Token(tipo, lexema, linha, colunaDoPrimeiroCaracterDoLexema, tokens.size());
         tokens.add(token);
     }
 
@@ -245,30 +247,39 @@ public class Analizador {
                     estado = 5;
                     break;
                 case '(':
+                    lexema = Character.toString(caracter);
                     adicionarNovoToken("cLPar");
                     break;
                 case ')':
+                    lexema = Character.toString(caracter);
                     adicionarNovoToken("cDPar");
                     break;
                 case '[':
+                    lexema = Character.toString(caracter);
                     adicionarNovoToken("cLCha");
                     break;
                 case ']':
+                    lexema = Character.toString(caracter);
                     adicionarNovoToken("cRCha");
                     break;
                 case '+':
+                    lexema = Character.toString(caracter);
                     adicionarNovoToken("cAdd");
                     break;
                 case '-':
+                    lexema = Character.toString(caracter);
                     adicionarNovoToken("cSub");
                     break;
                 case '*':
+                    lexema = Character.toString(caracter);
                     adicionarNovoToken("cMul");
                     break;
                 case '/':
+                    lexema = Character.toString(caracter);
                     adicionarNovoToken("cDiv");
                     break;
                 case '=':
+                    lexema = Character.toString(caracter);
                     adicionarNovoToken("cEQ");
                     break;
                 case '<':
@@ -280,12 +291,15 @@ public class Analizador {
                     estado = 7;
                     break;
                 case ';':
+                    lexema = Character.toString(caracter);
                     adicionarNovoToken("cPVir");
                     break;
                 case ',':
+                    lexema = Character.toString(caracter);
                     adicionarNovoToken("cVir");
                     break;
                 case '.':
+                    lexema = Character.toString(caracter);
                     adicionarNovoToken("cPto");
                     break;
             }
