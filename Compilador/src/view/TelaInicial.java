@@ -9,7 +9,15 @@ import compilador.lexico.Analizador;
 import compilador.lexico.Simbolo;
 import compilador.lexico.Token;
 import compilador.sintatico.AnalizadorSintatico;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import model.SimboloTableModel;
 import model.TokenTableModel;
 
@@ -203,6 +211,11 @@ public class TelaInicial extends javax.swing.JFrame {
         jMenu1.add(jMenuItemAbrir);
 
         jMenuItemFechar.setText("Fechar");
+        jMenuItemFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemFecharActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItemFechar);
 
         jMenuItemSalvar.setText("Salvar");
@@ -232,6 +245,11 @@ public class TelaInicial extends javax.swing.JFrame {
         jMenu2.setText("Editar");
 
         jMenuItemRecortar.setText("Recortar");
+        jMenuItemRecortar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemRecortarActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItemRecortar);
 
         jMenuItemCopiar.setText("Copiar");
@@ -367,6 +385,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
     private void jMenuItemColarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemColarActionPerformed
         // TODO add your handling code here:
+        jTextAreaFonte.paste();
     }//GEN-LAST:event_jMenuItemColarActionPerformed
 
     private void jMenuItemLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemLocalizarActionPerformed
@@ -388,18 +407,50 @@ public class TelaInicial extends javax.swing.JFrame {
 
     private void jMenuItemAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAbrirActionPerformed
         // TODO add your handling code here:
+        //ARRUMAR BOTÃO CANCEL
+        try {
+            JFileChooser fc = new JFileChooser();
+            fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            int resultado = fc.showOpenDialog(this);
+            if (resultado == JFileChooser.CANCEL_OPTION) {
+                //System.exit(1);
+            }
+            File fileName = fc.getSelectedFile();
+            FileReader input = null;
+            try {
+                input = new FileReader(fileName);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(TelaInicial.class.getName()).log(Level.SEVERE, null, ex);
+            }
+           try (BufferedReader bufRead = new BufferedReader(input)) {
+               String linha = (String) bufRead.readLine(); 
+               
+               jTextAreaFonte.setText("");
+               while (linha != null) {
+                   jTextAreaFonte.append(linha + "\n");
+                   linha = bufRead.readLine();
+               }
+           } catch (IOException ex) {
+               Logger.getLogger(TelaInicial.class.getName()).log(Level.SEVERE, null, ex);
+           }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            Logger.getLogger(e.toString());
+        }
     }//GEN-LAST:event_jMenuItemAbrirActionPerformed
 
     private void jMenuItemSelecionarTudoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSelecionarTudoActionPerformed
         // TODO add your handling code here:
+        jTextAreaFonte.selectAll();
     }//GEN-LAST:event_jMenuItemSelecionarTudoActionPerformed
 
     private void jMenuItemCopiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCopiarActionPerformed
         // TODO add your handling code here:
+        jTextAreaFonte.copy();
     }//GEN-LAST:event_jMenuItemCopiarActionPerformed
 
     private void jMenuItemLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemLimparActionPerformed
         // TODO add your handling code here:
+        jTextAreaFonte.setText("");
     }//GEN-LAST:event_jMenuItemLimparActionPerformed
 
     private void jMenuItemSubstituirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSubstituirActionPerformed
@@ -441,6 +492,18 @@ public class TelaInicial extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_jMenuItemCompilarActionPerformed
+
+    private void jMenuItemFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFecharActionPerformed
+        // TODO add your handling code here:
+        //PERGUNTAR SE DESEJA SALVAR ARQUIVO
+        jTextAreaFonte.setText("");
+        jTextAreaFonte.setEnabled(false);
+    }//GEN-LAST:event_jMenuItemFecharActionPerformed
+
+    private void jMenuItemRecortarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRecortarActionPerformed
+        // TODO add your handling code here:
+        jTextAreaFonte.cut();
+    }//GEN-LAST:event_jMenuItemRecortarActionPerformed
 
     /**
      * @param args the command line arguments
