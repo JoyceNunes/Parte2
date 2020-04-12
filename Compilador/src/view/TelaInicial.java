@@ -9,6 +9,10 @@ import compilador.lexico.Analizador;
 import compilador.lexico.Simbolo;
 import compilador.lexico.Token;
 import compilador.sintatico.AnalizadorSintatico;
+import java.awt.BorderLayout;
+import java.util.ArrayList;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,7 +24,9 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import model.SimboloTableModel;
 import model.TokenTableModel;
-
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import org.fife.ui.rtextarea.RTextScrollPane;
 /**
  *
  * @author Joyce
@@ -38,11 +44,25 @@ public class TelaInicial extends javax.swing.JFrame {
         initComponents();
         jTable1.setModel(simboloTableModel);
         jTable2.setModel(tokenTableModel);
+<<<<<<< HEAD
         jMenuItemFechar.setEnabled(false);
         jMenuItemSalvar.setEnabled(false);
         jMenuItemSalvarComo.setEnabled(false);
         jMenuItemImprimir.setEnabled(false);
         
+=======
+        jTextAreaFonte = TextEditor();
+    }
+    
+    public JTextArea TextEditor() {
+        JPanel cp = new JPanel(new BorderLayout());
+        RSyntaxTextArea textArea = new RSyntaxTextArea(18, 40);
+        textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
+        textArea.setCodeFoldingEnabled(true);
+        RTextScrollPane sp = new RTextScrollPane(textArea);
+        jScrollPane2.setViewportView(sp);
+        return textArea;
+>>>>>>> 3f65c41641332c94c6c43061ee502dea4955a200
     }
 
     /**
