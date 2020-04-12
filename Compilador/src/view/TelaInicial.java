@@ -244,9 +244,19 @@ public class TelaInicial extends javax.swing.JFrame {
         jMenu1.add(jMenuItemFechar);
 
         jMenuItemSalvar.setText("Salvar");
+        jMenuItemSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemSalvarActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItemSalvar);
 
         jMenuItemSalvarComo.setText("Salvar Como");
+        jMenuItemSalvarComo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemSalvarComoActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItemSalvarComo);
 
         jMenuItemImprimir.setText("Imprimir");
@@ -437,14 +447,12 @@ public class TelaInicial extends javax.swing.JFrame {
 
     private void jMenuItemAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAbrirActionPerformed
         // TODO add your handling code here:
-        //ARRUMAR BOTÃO CANCEL
+        
         try {
             JFileChooser fc = new JFileChooser();
             fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
             int resultado = fc.showOpenDialog(this);
-            if (resultado == JFileChooser.CANCEL_OPTION) {
-                //System.exit(1);
-            }
+            
             File fileName = fc.getSelectedFile();
             FileReader input = null;
             try {
@@ -536,16 +544,24 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemRecortarActionPerformed
 
     private void jMenuItemSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSobreActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here:       
         
-        //Arrumar quando fecha fecha as duas telas
+        
         TelaSobre telaSobre = new  TelaSobre();
-        telaSobre.setTitle("Sobre");
-        telaSobre.setLocationRelativeTo(null);        
+        telaSobre.setTitle("Sobre");        
         telaSobre.setVisible(true);
         
         
+        
     }//GEN-LAST:event_jMenuItemSobreActionPerformed
+
+    private void jMenuItemSalvarComoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSalvarComoActionPerformed
+        // TODO add your handling code here:        
+    }//GEN-LAST:event_jMenuItemSalvarComoActionPerformed
+
+    private void jMenuItemSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSalvarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemSalvarActionPerformed
 
     /**
      * @param args the command line arguments
