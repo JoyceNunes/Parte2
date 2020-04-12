@@ -9,12 +9,10 @@ import compilador.lexico.Analizador;
 import compilador.lexico.Simbolo;
 import compilador.lexico.Token;
 import compilador.sintatico.AnalizadorSintatico;
-<<<<<<< HEAD
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-=======
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,7 +22,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
->>>>>>> aadaabf6969868d588cb63e883f2fe3ce2c008a2
 import model.SimboloTableModel;
 import model.TokenTableModel;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
