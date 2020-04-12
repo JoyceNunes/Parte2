@@ -44,7 +44,7 @@ public class TelaInicial extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        jTextAreaFonte = new javax.swing.JTextArea();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -86,9 +86,9 @@ public class TelaInicial extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
+        jTextAreaFonte.setColumns(20);
+        jTextAreaFonte.setRows(5);
+        jScrollPane2.setViewportView(jTextAreaFonte);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -375,6 +375,15 @@ public class TelaInicial extends javax.swing.JFrame {
 
     private void jMenuItemNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemNovoActionPerformed
         // TODO add your handling code here:
+        
+        //PERGUNTAR SE DESEJA SALVAR ATUAL        
+        jTextAreaFonte.setText("");
+        jTextAreaFonte.setEnabled(true);
+        jMenuItemFechar.setEnabled(true);
+        jMenuItemSalvar.setEnabled(true);
+        jMenuItemSalvarComo.setEnabled(true);
+        jMenuItemImprimir.setEnabled(true);
+        
     }//GEN-LAST:event_jMenuItemNovoActionPerformed
 
     private void jMenuItemAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAbrirActionPerformed
@@ -412,9 +421,9 @@ public class TelaInicial extends javax.swing.JFrame {
 //            tokenTableModel.addRow(token);
 //        }
 
-        if (!jTextArea2.getText().isEmpty()) {
+        if (!jTextAreaFonte.getText().isEmpty()) {
             jTextArea1.setText("");
-            Analizador analisador = new Analizador(jTextArea2.getText() + "\n");
+            Analizador analisador = new Analizador(jTextAreaFonte.getText() + "\n");
             ArrayList<Token> tokens = new ArrayList<>(analisador.getTokens());
             ArrayList<Simbolo> simbolos = analisador.getSimbolos();
             jTextArea1.setText(analisador.getError());
@@ -510,6 +519,6 @@ public class TelaInicial extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JTextArea jTextAreaFonte;
     // End of variables declaration//GEN-END:variables
 }
