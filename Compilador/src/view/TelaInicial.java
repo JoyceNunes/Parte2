@@ -17,7 +17,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +29,7 @@ import model.TokenTableModel;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
+
 /**
  *
  * @author Joyce
@@ -49,11 +52,10 @@ public class TelaInicial extends javax.swing.JFrame {
         jMenuItemSalvar.setEnabled(false);
         jMenuItemSalvarComo.setEnabled(false);
         jMenuItemImprimir.setEnabled(false);
-        
 
         jTextAreaFonte = TextEditor();
     }
-    
+
     public JTextArea TextEditor() {
         JPanel cp = new JPanel(new BorderLayout());
         RSyntaxTextArea textArea = new RSyntaxTextArea(18, 40);
@@ -89,7 +91,7 @@ public class TelaInicial extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jTextAreaMensagens = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItemNovo = new javax.swing.JMenuItem();
@@ -213,9 +215,9 @@ public class TelaInicial extends javax.swing.JFrame {
 
         jLabel1.setText("Mensagens");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jTextAreaMensagens.setColumns(20);
+        jTextAreaMensagens.setRows(5);
+        jScrollPane1.setViewportView(jTextAreaMensagens);
 
         jMenu1.setText("Arquivo");
 
@@ -434,7 +436,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
     private void jMenuItemNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemNovoActionPerformed
         // TODO add your handling code here:
-        
+
         //PERGUNTAR SE DESEJA SALVAR ATUAL        
         jTextAreaFonte.setText("");
         jTextAreaFonte.setEnabled(true);
@@ -442,17 +444,17 @@ public class TelaInicial extends javax.swing.JFrame {
         jMenuItemSalvar.setEnabled(true);
         jMenuItemSalvarComo.setEnabled(true);
         jMenuItemImprimir.setEnabled(true);
-        
+
     }//GEN-LAST:event_jMenuItemNovoActionPerformed
 
     private void jMenuItemAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAbrirActionPerformed
         // TODO add your handling code here:
-        
+
         try {
             JFileChooser fc = new JFileChooser();
             fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
             int resultado = fc.showOpenDialog(this);
-            
+
             File fileName = fc.getSelectedFile();
             FileReader input = null;
             try {
@@ -460,17 +462,17 @@ public class TelaInicial extends javax.swing.JFrame {
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(TelaInicial.class.getName()).log(Level.SEVERE, null, ex);
             }
-           try (BufferedReader bufRead = new BufferedReader(input)) {
-               String linha = (String) bufRead.readLine(); 
-               
-               jTextAreaFonte.setText("");
-               while (linha != null) {
-                   jTextAreaFonte.append(linha + "\n");
-                   linha = bufRead.readLine();
-               }
-           } catch (IOException ex) {
-               Logger.getLogger(TelaInicial.class.getName()).log(Level.SEVERE, null, ex);
-           }
+            try (BufferedReader bufRead = new BufferedReader(input)) {
+                String linha = (String) bufRead.readLine();
+
+                jTextAreaFonte.setText("");
+                while (linha != null) {
+                    jTextAreaFonte.append(linha + "\n");
+                    linha = bufRead.readLine();
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(TelaInicial.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } catch (ArrayIndexOutOfBoundsException e) {
             Logger.getLogger(e.toString());
         }
@@ -511,22 +513,22 @@ public class TelaInicial extends javax.swing.JFrame {
 //        }
 
         if (!jTextAreaFonte.getText().isEmpty()) {
-            jTextArea1.setText("");
+            jTextAreaMensagens.setText("");
             Analizador analisador = new Analizador(jTextAreaFonte.getText() + "\n");
             ArrayList<Token> tokens = new ArrayList<>(analisador.getTokens());
             ArrayList<Simbolo> simbolos = analisador.getSimbolos();
-            jTextArea1.setText(analisador.getError());
+            jTextAreaMensagens.setText(analisador.getError());
             for (Token token : tokens) {
                 tokenTableModel.addRow(token);
             }
 
             AnalizadorSintatico sintatico = new AnalizadorSintatico(tokens, simbolos, analisador.getError());
-            jTextArea1.setText(sintatico.getMensagem());
+            jTextAreaMensagens.setText(sintatico.getMensagem());
             for (Simbolo simbolo : simbolos) {
                 simboloTableModel.addRow(simbolo);
             }
         } else {
-            jTextArea1.setText("Código vazio, por favor adicione um arquivo .txt através do menu ou digite o código desejado");
+            jTextAreaMensagens.setText("Código vazio, por favor adicione um arquivo .txt através do menu ou digite o código desejado");
 
         }
     }//GEN-LAST:event_jMenuItemCompilarActionPerformed
@@ -545,14 +547,12 @@ public class TelaInicial extends javax.swing.JFrame {
 
     private void jMenuItemSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSobreActionPerformed
         // TODO add your handling code here:       
-        
-        
-        TelaSobre telaSobre = new  TelaSobre();
-        telaSobre.setTitle("Sobre");        
+
+        TelaSobre telaSobre = new TelaSobre();
+        telaSobre.setTitle("Sobre");
         telaSobre.setVisible(true);
-        
-        
-        
+
+
     }//GEN-LAST:event_jMenuItemSobreActionPerformed
 
     private void jMenuItemSalvarComoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSalvarComoActionPerformed
@@ -560,8 +560,28 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemSalvarComoActionPerformed
 
     private void jMenuItemSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSalvarActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here:        
+        String arq = "arquivo.txt";
+        String texto = jTextAreaFonte.getText();        
+        if (salvar(arq, texto)) {
+            jTextAreaMensagens.setText("Arquivo salvo com sucesso!");
+        } else {
+            jTextAreaMensagens.setText("Erro ao salvar o arquivo!");
+        }
     }//GEN-LAST:event_jMenuItemSalvarActionPerformed
+
+    private boolean salvar(String caminho, String texto) {
+        try {
+            FileWriter arq = new FileWriter(caminho);
+            PrintWriter gravarArq = new PrintWriter(arq);
+            gravarArq.println(texto);
+            gravarArq.close();
+            return true;
+        } catch (IOException ex) {
+            return false;
+        }
+
+    }
 
     /**
      * @param args the command line arguments
@@ -639,7 +659,7 @@ public class TelaInicial extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextAreaFonte;
+    private javax.swing.JTextArea jTextAreaMensagens;
     // End of variables declaration//GEN-END:variables
 }
