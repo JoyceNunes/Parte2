@@ -10,12 +10,14 @@ import compilador.lexico.Simbolo;
 import compilador.lexico.Token;
 import compilador.sintatico.AnalizadorSintatico;
 import java.awt.BorderLayout;
+import java.awt.Desktop;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -24,6 +26,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import model.SimboloTableModel;
 import model.TokenTableModel;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
@@ -423,6 +426,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
     private void jMenuItemImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemImprimirActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_jMenuItemImprimirActionPerformed
 
     private void jMenuItemColarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemColarActionPerformed
@@ -437,7 +441,7 @@ public class TelaInicial extends javax.swing.JFrame {
     private void jMenuItemNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemNovoActionPerformed
         // TODO add your handling code here:
 
-        //PERGUNTAR SE DESEJA SALVAR ATUAL 
+        
         jTextAreaMensagens.setText("");
         jTextAreaFonte.setText("");
         jTextAreaFonte.setEnabled(true);
@@ -556,19 +560,27 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemSobreActionPerformed
 
     private void jMenuItemSalvarComoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSalvarComoActionPerformed
-        // TODO add your handling code here:       
-        String arq = "C:\\Users\\Joyce\\Desktop\\teste\\arquivo.txt";
-    }//GEN-LAST:event_jMenuItemSalvarComoActionPerformed
-
-    private void jMenuItemSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSalvarActionPerformed
-        // TODO add your handling code here:        
-        String arq = "arquivo.txt";
+        // TODO add your handling code here:  
+        String caminho = "arquivo.txt";
         String texto = jTextAreaFonte.getText();        
-        if (salvar(arq, texto)) {
+        if (salvar(caminho, texto)) {
             jTextAreaMensagens.setText("Arquivo salvo com sucesso!");
         } else {
             jTextAreaMensagens.setText("Erro ao salvar o arquivo!");
         }
+    }//GEN-LAST:event_jMenuItemSalvarComoActionPerformed
+
+    private void jMenuItemSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSalvarActionPerformed
+        // TODO add your handling code here:    
+        
+        String caminho = "arquivo.txt";
+        String texto = jTextAreaFonte.getText();        
+        if (salvar(caminho, texto)) {
+            jTextAreaMensagens.setText("Arquivo salvo com sucesso!");
+        } else {
+            jTextAreaMensagens.setText("Erro ao salvar o arquivo!");
+        }
+        
     }//GEN-LAST:event_jMenuItemSalvarActionPerformed
 
     private boolean salvar(String caminho, String texto) {
