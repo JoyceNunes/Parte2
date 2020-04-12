@@ -3,8 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Joyce/Desktop/Trabalho-Compiladores-Parte2/Compilador/src/compilador/Compilador.java</file>
-            <file>file:/C:/Users/Joyce/Desktop/Trabalho-Compiladores-Parte2/Compilador/src/compilador/TelaInicial.java</file>
+            <file>file:/C:/Users/helio/Documents/Github/Parte2/Compilador/src/model/TokenTableModel.java</file>
+            <file>file:/C:/Users/helio/Documents/Github/Parte2/Compilador/src/view/TelaInicial.java</file>
+            <file>file:/C:/Users/helio/Documents/Github/Parte2/Compilador/src/compilador/lexico/Analizador.java</file>
+            <file>file:/C:/Users/helio/Documents/Github/Parte2/Compilador/src/compilador/sintatico/AnalizadorSintatico.java</file>
+            <file>file:/C:/Users/helio/Documents/Github/Parte2/Compilador/src/model/SimboloTableModel.java</file>
         </group>
     </open-files>
 </project-private>
