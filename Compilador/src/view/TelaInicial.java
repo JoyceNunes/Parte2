@@ -53,8 +53,7 @@ public class TelaInicial extends javax.swing.JFrame {
         jMenuItemSalvarComo.setEnabled(false);
         jMenuItemImprimir.setEnabled(false);        
         jTextAreaFonte = TextEditor();
-        jTextAreaFonte.setEnabled(false);
-        jTextAreaMensagens.setText("Para iniciar clique em Novo ou Abrir");
+        
     }
 
     public JTextArea TextEditor() {
@@ -557,7 +556,8 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemSobreActionPerformed
 
     private void jMenuItemSalvarComoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSalvarComoActionPerformed
-        // TODO add your handling code here:        
+        // TODO add your handling code here:       
+        String arq = "C:\\Users\\Joyce\\Desktop\\teste\\arquivo.txt";
     }//GEN-LAST:event_jMenuItemSalvarComoActionPerformed
 
     private void jMenuItemSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSalvarActionPerformed
