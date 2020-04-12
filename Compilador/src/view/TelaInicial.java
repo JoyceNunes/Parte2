@@ -338,6 +338,11 @@ public class TelaInicial extends javax.swing.JFrame {
         jMenu5.setText("Ajuda");
 
         jMenuItemSobre.setText("Sobre");
+        jMenuItemSobre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemSobreActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItemSobre);
 
         jMenuBar1.add(jMenu5);
@@ -509,6 +514,18 @@ public class TelaInicial extends javax.swing.JFrame {
         // TODO add your handling code here:
         jTextAreaFonte.cut();
     }//GEN-LAST:event_jMenuItemRecortarActionPerformed
+
+    private void jMenuItemSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSobreActionPerformed
+        // TODO add your handling code here:
+        
+        //Arrumar quando fecha fecha as duas telas
+        TelaSobre telaSobre = new  TelaSobre();
+        telaSobre.setTitle("Sobre");
+        telaSobre.setLocationRelativeTo(null);        
+        telaSobre.setVisible(true);
+        
+        
+    }//GEN-LAST:event_jMenuItemSobreActionPerformed
 
     /**
      * @param args the command line arguments
