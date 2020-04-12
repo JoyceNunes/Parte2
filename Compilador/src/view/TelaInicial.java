@@ -44,13 +44,13 @@ public class TelaInicial extends javax.swing.JFrame {
         initComponents();
         jTable1.setModel(simboloTableModel);
         jTable2.setModel(tokenTableModel);
-<<<<<<< HEAD
+
         jMenuItemFechar.setEnabled(false);
         jMenuItemSalvar.setEnabled(false);
         jMenuItemSalvarComo.setEnabled(false);
         jMenuItemImprimir.setEnabled(false);
         
-=======
+
         jTextAreaFonte = TextEditor();
     }
     
@@ -62,7 +62,7 @@ public class TelaInicial extends javax.swing.JFrame {
         RTextScrollPane sp = new RTextScrollPane(textArea);
         jScrollPane2.setViewportView(sp);
         return textArea;
->>>>>>> 3f65c41641332c94c6c43061ee502dea4955a200
+
     }
 
     /**
