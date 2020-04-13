@@ -549,17 +549,19 @@ public class TelaInicial extends javax.swing.JFrame {
 
     private void jMenuItemSalvarComoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSalvarComoActionPerformed
         // TODO add your handling code here:  
+        String nome = JOptionPane.showInputDialog("Digite o nome do arquivo");
+        
 
-        String arquivoWave = "";
+        String arq = "";
         JFileChooser arquivo = new JFileChooser();
         arquivo.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
         if (arquivo.showOpenDialog(arquivo) == JFileChooser.APPROVE_OPTION) {
-            arquivoWave = arquivo.getSelectedFile().getAbsolutePath()+"\\arquivo.txt";
+            arq = arquivo.getSelectedFile().getAbsolutePath()+"\\"+nome+ ".txt";
         }
-        System.out.println(arquivoWave);
+        System.out.println(arq);
         String texto = jTextAreaFonte.getText();
-        if (salvar(arquivoWave, texto)) {
+        if (salvar(arq, texto)) {
             jTextAreaMensagens.setText("Arquivo salvo com sucesso!");
         } else {
             jTextAreaMensagens.setText("Erro ao salvar o arquivo!");
