@@ -440,12 +440,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
         jTextAreaMensagens.setText("");
         jTextAreaFonte.setText("");
-        jTextAreaFonte.setEnabled(true);
-        jMenuItemFechar.setEnabled(true);
-        jMenuItemSalvar.setEnabled(true);
-        jMenuItemSalvarComo.setEnabled(true);
-        jMenuItemImprimir.setEnabled(true);
-
+        
     }//GEN-LAST:event_jMenuItemNovoActionPerformed
 
     private void jMenuItemAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAbrirActionPerformed
