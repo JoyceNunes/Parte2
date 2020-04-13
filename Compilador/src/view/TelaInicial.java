@@ -51,12 +51,9 @@ public class TelaInicial extends javax.swing.JFrame {
         jTable1.setModel(simboloTableModel);
         jTable2.setModel(tokenTableModel);
 
-        jMenuItemFechar.setEnabled(false);
-        jMenuItemSalvar.setEnabled(false);
-        jMenuItemSalvarComo.setEnabled(false);
-        jMenuItemImprimir.setEnabled(false);        
-        jTextAreaFonte = TextEditor();
         
+        jTextAreaFonte = TextEditor();
+
     }
 
     public JTextArea TextEditor() {
@@ -426,7 +423,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
     private void jMenuItemImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemImprimirActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jMenuItemImprimirActionPerformed
 
     private void jMenuItemColarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemColarActionPerformed
@@ -441,7 +438,6 @@ public class TelaInicial extends javax.swing.JFrame {
     private void jMenuItemNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemNovoActionPerformed
         // TODO add your handling code here:
 
-        
         jTextAreaMensagens.setText("");
         jTextAreaFonte.setText("");
         jTextAreaFonte.setEnabled(true);
@@ -561,8 +557,17 @@ public class TelaInicial extends javax.swing.JFrame {
 
     private void jMenuItemSalvarComoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSalvarComoActionPerformed
         // TODO add your handling code here:  
-        String caminho = "arquivo.txt";
-        String texto = jTextAreaFonte.getText();        
+
+        JFileChooser fc = new JFileChooser();
+        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int resultado = fc.showOpenDialog(this);
+
+        File fileName = fc.getSelectedFile();
+        
+        String caminho = fileName.getAbsolutePath();
+        
+        
+        String texto = jTextAreaFonte.getText();
         if (salvar(caminho, texto)) {
             jTextAreaMensagens.setText("Arquivo salvo com sucesso!");
         } else {
@@ -572,15 +577,15 @@ public class TelaInicial extends javax.swing.JFrame {
 
     private void jMenuItemSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSalvarActionPerformed
         // TODO add your handling code here:    
-        
+
         String caminho = "arquivo.txt";
-        String texto = jTextAreaFonte.getText();        
+        String texto = jTextAreaFonte.getText();
         if (salvar(caminho, texto)) {
             jTextAreaMensagens.setText("Arquivo salvo com sucesso!");
         } else {
             jTextAreaMensagens.setText("Erro ao salvar o arquivo!");
         }
-        
+
     }//GEN-LAST:event_jMenuItemSalvarActionPerformed
 
     private boolean salvar(String caminho, String texto) {
