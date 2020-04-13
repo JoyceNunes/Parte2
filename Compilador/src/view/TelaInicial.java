@@ -51,7 +51,6 @@ public class TelaInicial extends javax.swing.JFrame {
         jTable1.setModel(simboloTableModel);
         jTable2.setModel(tokenTableModel);
 
-        
         jTextAreaFonte = TextEditor();
 
     }
@@ -437,10 +436,9 @@ public class TelaInicial extends javax.swing.JFrame {
 
     private void jMenuItemNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemNovoActionPerformed
         // TODO add your handling code here:
-
         jTextAreaMensagens.setText("");
         jTextAreaFonte.setText("");
-        
+
     }//GEN-LAST:event_jMenuItemNovoActionPerformed
 
     private void jMenuItemAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAbrirActionPerformed
@@ -530,10 +528,9 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemCompilarActionPerformed
 
     private void jMenuItemFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFecharActionPerformed
-        // TODO add your handling code here:
-        //PERGUNTAR SE DESEJA SALVAR ARQUIVO
+        // TODO add your handling code here:        
         jTextAreaFonte.setText("");
-        jTextAreaFonte.setEnabled(false);
+
     }//GEN-LAST:event_jMenuItemFecharActionPerformed
 
     private void jMenuItemRecortarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRecortarActionPerformed
@@ -553,17 +550,16 @@ public class TelaInicial extends javax.swing.JFrame {
     private void jMenuItemSalvarComoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSalvarComoActionPerformed
         // TODO add your handling code here:  
 
-        JFileChooser fc = new JFileChooser();
-        fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        int resultado = fc.showOpenDialog(this);
+        String arquivoWave = "";
+        JFileChooser arquivo = new JFileChooser();
+        arquivo.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
-        File fileName = fc.getSelectedFile();
-        
-        String caminho = fileName.getAbsolutePath();
-        
-        
+        if (arquivo.showOpenDialog(arquivo) == JFileChooser.APPROVE_OPTION) {
+            arquivoWave = arquivo.getSelectedFile().getAbsolutePath()+"\\arquivo.txt";
+        }
+        System.out.println(arquivoWave);
         String texto = jTextAreaFonte.getText();
-        if (salvar(caminho, texto)) {
+        if (salvar(arquivoWave, texto)) {
             jTextAreaMensagens.setText("Arquivo salvo com sucesso!");
         } else {
             jTextAreaMensagens.setText("Erro ao salvar o arquivo!");
@@ -571,8 +567,7 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemSalvarComoActionPerformed
 
     private void jMenuItemSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSalvarActionPerformed
-        // TODO add your handling code here:    
-
+        // TODO add your handling code here: 
         String caminho = "arquivo.txt";
         String texto = jTextAreaFonte.getText();
         if (salvar(caminho, texto)) {
