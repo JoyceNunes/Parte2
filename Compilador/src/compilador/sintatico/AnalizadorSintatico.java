@@ -50,7 +50,9 @@ public final class AnalizadorSintatico {
 
     public void programa() {
         this.lexico();
+        System.out.println("getLexema = "+token.getLexema().toLowerCase());
         if (token.getLexema().toLowerCase().equals("program")) {
+            System.out.println("SIM");
             this.lexico();
             if (token.getClasse().equals("cId")) {
                 this.simbolos.get(this.token.getEndereco()).setCategoria("program");
@@ -62,14 +64,13 @@ public final class AnalizadorSintatico {
 
                     } else {
                         this.mensagem += "Erro: " + "(" + token.getLinha() + "," + token.getColuna() + ")" + " ponto final não encontrado \n";
-
                     }
                 } else {
                     this.mensagem += "Erro: " + "(" + token.getLinha() + "," + token.getColuna() + ")" + " , Declaração do identificador do programa faltando ';' \n";
 
                 }
             } else {
-                this.mensagem += "Erro: " + "(" + token.getLinha() + "," + token.getColuna() + ")" + " , Declaração do identificador do programa não localizada \n";
+                this.mensagem += "Erro: " + "(" + token.getLinha() + "," + token.getColuna() + ")" + " , Declaração do identificador do programa não localizada 'cId' \n";
 
             }
 
@@ -170,14 +171,12 @@ public final class AnalizadorSintatico {
     public void tipo() {
         this.lexico();
         if (this.token.getLexema().toLowerCase().equals("array")) {
-
             this.tipoArray();
         } else if (this.token.getLexema().toLowerCase().equals("integer") || (this.token.getLexema().toLowerCase().equals("real"))) {
             this.tipoSimples(false);
         } else {
             this.mensagem += "Erro: " + "(" + token.getLinha() + "," + token.getColuna() + ")" + " , Tipo inválido de variável \n";
         }
-
     }
 
     public void tipoArray() {

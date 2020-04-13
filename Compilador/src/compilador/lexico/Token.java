@@ -21,7 +21,6 @@ public class Token {
         this.lexema = lexema;
         this.coluna = coluna;
         this.linha = linha;
-
     }
 
     public Token(String classe, String lexema, int linha, int coluna, int endereco) {
