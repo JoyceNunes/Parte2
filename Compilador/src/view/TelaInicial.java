@@ -10,7 +10,9 @@ import compilador.lexico.Simbolo;
 import compilador.lexico.Token;
 import compilador.sintatico.AnalizadorSintatico;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Desktop;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -26,46 +28,39 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.Highlighter;
 import model.SimboloTableModel;
 import model.TokenTableModel;
-import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
-import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
-import org.fife.ui.rtextarea.RTextScrollPane;
+import org.fife.ui.rtextarea.*;
+import org.fife.ui.rsyntaxtextarea.*;
 
 /**
  *
- * @author Joyce
+ * @author Helio, Iago, Joyce
  */
 public class TelaInicial extends javax.swing.JFrame {
 
     Analizador analizador;
     SimboloTableModel simboloTableModel = new SimboloTableModel();
     TokenTableModel tokenTableModel = new TokenTableModel();
-
+    RSyntaxTextArea fonteTextArea = new RSyntaxTextArea(20,60);
+    
+    RTextScrollPane sp = new RTextScrollPane(fonteTextArea);
     /**
      * Creates new form TelaInicial
      */
     public TelaInicial() {
         initComponents();
+        this.setLocationRelativeTo(null);
         jTable1.setModel(simboloTableModel);
         jTable2.setModel(tokenTableModel);
-
-        jTextAreaFonte = TextEditor();
-
     }
-
-    public JTextArea TextEditor() {
-        JPanel cp = new JPanel(new BorderLayout());
-        RSyntaxTextArea textArea = new RSyntaxTextArea(18, 40);
-        textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
-        textArea.setCodeFoldingEnabled(true);
-        RTextScrollPane sp = new RTextScrollPane(textArea);
-        jScrollPane2.setViewportView(sp);
-        return textArea;
-
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -76,9 +71,7 @@ public class TelaInicial extends javax.swing.JFrame {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel2 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextAreaFonte = new javax.swing.JTextArea();
+        fontePanel = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -120,22 +113,10 @@ public class TelaInicial extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTextAreaFonte.setColumns(20);
-        jTextAreaFonte.setRows(5);
-        jScrollPane2.setViewportView(jTextAreaFonte);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 736, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("Fonte", jPanel2);
+        fontePanel.setLayout(new java.awt.CardLayout());
+        jTabbedPane1.addTab("Fonte", fontePanel);
+        fontePanel.add(sp);
+        fonteTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_DELPHI);
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -158,7 +139,7 @@ public class TelaInicial extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Itens Léxicos", jPanel3);
@@ -205,7 +186,7 @@ public class TelaInicial extends javax.swing.JFrame {
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 362, Short.MAX_VALUE)
+            .addGap(0, 472, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Código Objeto", jPanel5);
@@ -421,23 +402,49 @@ public class TelaInicial extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItemImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemImprimirActionPerformed
-        // TODO add your handling code here:
-
+        try {
+            printTmpFile();
+            JOptionPane.showMessageDialog(null,"Arquivo enviado para impressão!"
+        ); 
+        } catch (IOException ex) {
+            Logger.getLogger(TelaInicial.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItemImprimirActionPerformed
-
+    public void printTmpFile() throws IOException {
+        File tmpFile = File.createTempFile("compiladoresFileToPrint", ".txt");
+        FileWriter writer = new FileWriter(tmpFile);
+        writer.write(fonteTextArea.getText());
+        writer.close();
+        Desktop desktop = Desktop.getDesktop();
+        try {
+            desktop.print(tmpFile);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
     private void jMenuItemColarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemColarActionPerformed
         // TODO add your handling code here:
-        jTextAreaFonte.paste();
+        fonteTextArea.paste();
     }//GEN-LAST:event_jMenuItemColarActionPerformed
 
     private void jMenuItemLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemLocalizarActionPerformed
-        // TODO add your handling code here:
+       String findword = JOptionPane.showInputDialog(fontePanel,"Localizar:");
+        Highlighter highlighter = fonteTextArea.getHighlighter();
+        Highlighter.HighlightPainter painter = new DefaultHighlighter.DefaultHighlightPainter(Color.pink);
+        int p0 = fonteTextArea.getText().indexOf(findword);
+        int p1 = p0 + findword.length();
+          try {
+              highlighter.addHighlight(p0, p1, painter );
+          } catch (BadLocationException ex) {
+              JOptionPane.showMessageDialog(fontePanel,"Palavra não encontrada.", "Erro!", JOptionPane.WARNING_MESSAGE);
+              Logger.getLogger(TelaInicial.class.getName()).log(Level.SEVERE, null, ex);
+          }
     }//GEN-LAST:event_jMenuItemLocalizarActionPerformed
 
     private void jMenuItemNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemNovoActionPerformed
         // TODO add your handling code here:
         jTextAreaMensagens.setText("");
-        jTextAreaFonte.setText("");
+        fonteTextArea.setText("");
 
     }//GEN-LAST:event_jMenuItemNovoActionPerformed
 
@@ -459,9 +466,9 @@ public class TelaInicial extends javax.swing.JFrame {
             try (BufferedReader bufRead = new BufferedReader(input)) {
                 String linha = (String) bufRead.readLine();
 
-                jTextAreaFonte.setText("");
+                fonteTextArea.setText("");
                 while (linha != null) {
-                    jTextAreaFonte.append(linha + "\n");
+                    fonteTextArea.append(linha + "\n");
                     linha = bufRead.readLine();
                 }
             } catch (IOException ex) {
@@ -474,21 +481,51 @@ public class TelaInicial extends javax.swing.JFrame {
 
     private void jMenuItemSelecionarTudoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSelecionarTudoActionPerformed
         // TODO add your handling code here:
-        jTextAreaFonte.selectAll();
+        fonteTextArea.selectAll();
     }//GEN-LAST:event_jMenuItemSelecionarTudoActionPerformed
 
     private void jMenuItemCopiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCopiarActionPerformed
         // TODO add your handling code here:
-        jTextAreaFonte.copy();
+        fonteTextArea.copy();
     }//GEN-LAST:event_jMenuItemCopiarActionPerformed
 
     private void jMenuItemLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemLimparActionPerformed
         // TODO add your handling code here:
-        jTextAreaFonte.setText("");
+        fonteTextArea.setText("");
     }//GEN-LAST:event_jMenuItemLimparActionPerformed
 
     private void jMenuItemSubstituirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSubstituirActionPerformed
-        // TODO add your handling code here:
+        int btns = JOptionPane.OK_CANCEL_OPTION;
+        BorderLayout layout = new BorderLayout();
+        JPanel panel = new JPanel(layout);
+
+        JPanel p = new JPanel(new BorderLayout(5, 5));
+        JPanel labels = new JPanel(new GridLayout(0, 1, 2, 2));
+        labels.add(new JLabel("Localizar:", SwingConstants.RIGHT));
+        labels.add(new JLabel("Substituir por:", SwingConstants.RIGHT));
+        p.add(labels, BorderLayout.WEST);
+
+        JPanel controls = new JPanel(new GridLayout(0, 1, 2, 2));
+        JTextField inputA = new JTextField();
+        controls.add(inputA);
+        JTextField inputB = new JTextField();
+        controls.add(inputB);
+        p.add(controls, BorderLayout.CENTER);
+        panel.add(p);
+
+        int res = JOptionPane.showConfirmDialog(fontePanel, panel, "Localizar e Substituir", btns);
+        if (res == JOptionPane.OK_OPTION) {
+            if(fonteTextArea.getText().contains(inputA.getText())){
+                fonteTextArea.setText(fonteTextArea.getText().replace(inputA.getText(), inputB.getText()));
+                System.out.println("Substituindo:" + inputA.getText());
+                System.out.println("Por: " + inputB.getText());
+                JOptionPane.showMessageDialog(fontePanel,
+                    "Todas as ocorrências de ["+inputA.getText()+"] foram substituídas por ["+inputB.getText()+"]",
+                    "Substituição realizada!", JOptionPane.WARNING_MESSAGE); 
+            }else{
+              JOptionPane.showMessageDialog(fontePanel,"Palavra não encontrada.", "Erro!", JOptionPane.WARNING_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_jMenuItemSubstituirActionPerformed
 
     private void jMenuItemSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSairActionPerformed
@@ -506,9 +543,9 @@ public class TelaInicial extends javax.swing.JFrame {
 //            tokenTableModel.addRow(token);
 //        }
 
-        if (!jTextAreaFonte.getText().isEmpty()) {
+        if (!fonteTextArea.getText().isEmpty()) {
             jTextAreaMensagens.setText("");
-            Analizador analisador = new Analizador(jTextAreaFonte.getText() + "\n");
+            Analizador analisador = new Analizador(fonteTextArea.getText() + "\n");
             ArrayList<Token> tokens = new ArrayList<>(analisador.getTokens());
             ArrayList<Simbolo> simbolos = analisador.getSimbolos();
             jTextAreaMensagens.setText(analisador.getError());
@@ -529,18 +566,17 @@ public class TelaInicial extends javax.swing.JFrame {
 
     private void jMenuItemFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFecharActionPerformed
         // TODO add your handling code here:        
-        jTextAreaFonte.setText("");
+        fonteTextArea.setText("");
 
     }//GEN-LAST:event_jMenuItemFecharActionPerformed
 
     private void jMenuItemRecortarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRecortarActionPerformed
         // TODO add your handling code here:
-        jTextAreaFonte.cut();
+        fonteTextArea.cut();
     }//GEN-LAST:event_jMenuItemRecortarActionPerformed
 
     private void jMenuItemSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSobreActionPerformed
         // TODO add your handling code here:       
-
         TelaSobre telaSobre = new TelaSobre();
         telaSobre.setTitle("Sobre");
         telaSobre.setVisible(true);
@@ -560,7 +596,7 @@ public class TelaInicial extends javax.swing.JFrame {
             arq = arquivo.getSelectedFile().getAbsolutePath()+"\\"+nome+ ".txt";
         }
         System.out.println(arq);
-        String texto = jTextAreaFonte.getText();
+        String texto = fonteTextArea.getText();
         if (salvar(arq, texto)) {
             jTextAreaMensagens.setText("Arquivo salvo com sucesso!");
         } else {
@@ -571,7 +607,7 @@ public class TelaInicial extends javax.swing.JFrame {
     private void jMenuItemSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSalvarActionPerformed
         // TODO add your handling code here: 
         String caminho = "arquivo.txt";
-        String texto = jTextAreaFonte.getText();
+        String texto = fonteTextArea.getText();
         if (salvar(caminho, texto)) {
             jTextAreaMensagens.setText("Arquivo salvo com sucesso!");
         } else {
@@ -629,6 +665,7 @@ public class TelaInicial extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel fontePanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -656,12 +693,10 @@ public class TelaInicial extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemSelecionarTudo;
     private javax.swing.JMenuItem jMenuItemSobre;
     private javax.swing.JMenuItem jMenuItemSubstituir;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator1;
@@ -669,7 +704,6 @@ public class TelaInicial extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTextArea jTextAreaFonte;
     private javax.swing.JTextArea jTextAreaMensagens;
     // End of variables declaration//GEN-END:variables
 }
